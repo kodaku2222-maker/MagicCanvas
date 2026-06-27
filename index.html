@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Canvas</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Magic Canvas</h1>
+
+    <div class="card">
+
+      <h2>参考画像</h2>
+
+      <input type="file" id="imageInput" accept="image/*">
+
+      <img id="preview" alt="画像プレビュー">
+
+    </div>
+
+    <div class="card">
+
+      <h2>プロンプト</h2>
+
+      <textarea
+        id="prompt"
+        placeholder="例：このキャラを海賊風にする"></textarea>
+
+    </div>
+
+    <button id="generateButton">
+      ✨ Generate
+    </button>
+
+    <div class="card">
+
+      <h2>Result</h2>
+
+      <img id="resultImage" alt="生成画像">
+
+    </div>
+
+    <button id="saveButton">
+      💾 Save
+    </button>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
