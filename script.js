@@ -18,11 +18,14 @@ imageInput.addEventListener("change", function () {
 
 const generateButton = document.getElementById("generateButton");
 
-generateButton.addEventListener("click", function () {
+const prompt = document.getElementById("prompt").value;
 
-  alert("AI画像生成機能は開発中です！");
+const resultImage = document.getElementById("resultImage");
 
-});
+resultImage.src = preview.src;
+resultImage.style.display = "block";
+
+alert("仮生成：画像を表示しました");
 
 const saveButton = document.getElementById("saveButton");
 
