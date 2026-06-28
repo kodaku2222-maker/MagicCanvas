@@ -19,10 +19,10 @@ imageInput.addEventListener("change", function () {
   reader.readAsDataURL(file);
 });
 
-// 🤖 AI生成（本番）
-generateButton.addEventListener("click", async function () {
+// 🎨 AI風変換（無料版）
+generateButton.addEventListener("click", function () {
 
-  const prompt = document.getElementById("prompt").value;
+  const prompt = document.getElementById("prompt").value.toLowerCase();
   const image = preview.src;
 
   if (!image) {
@@ -30,31 +30,52 @@ generateButton.addEventListener("click", async function () {
     return;
   }
 
-  alert("AI生成中...少し待ってね");
+  alert("AI風変換中...");
 
-  const response = await fetch("https://api.replicate.com/v1/predictions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Token YOUR_API_KEY_HERE"
-    },
-    body: JSON.stringify({
-      version: "MODEL_ID_HERE",
-      input: {
-        prompt: prompt,
-        image: image
-      }
-    })
-  });
+  // キャンバス作成
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
-  const data = await response.json();
+  const img = new Image();
+  img.src = image;
 
-  console.log(data);
+  img.onload = function () {
 
-  alert("AIに送信しました（まだ結果取得は後で追加）");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // ベース描画
+    ctx.drawImage(img, 0, 0);
+
+    // 💡プロンプトで変化
+    if (prompt.includes("海賊")) {
+      ctx.filter = "brightness(0.6) contrast(1.4)";
+      ctx.drawImage(img, 0, 0);
+    }
+
+    else if (prompt.includes("アニメ")) {
+      ctx.filter = "contrast(1.5) saturate(1.8)";
+      ctx.drawImage(img, 0, 0);
+    }
+
+    else if (prompt.includes("夜")) {
+      ctx.filter = "brightness(0.4) hue-rotate(200deg)";
+      ctx.drawImage(img, 0, 0);
+    }
+
+    else {
+      ctx.filter = "contrast(1.2)";
+      ctx.drawImage(img, 0, 0);
+    }
+
+    // 結果表示
+    resultImage.src = canvas.toDataURL("image/png");
+    resultImage.style.display = "block";
+
+  };
 });
 
-// 保存
+// 💾 保存
 saveButton.addEventListener("click", function () {
 
   if (!resultImage.src) {
@@ -64,7 +85,7 @@ saveButton.addEventListener("click", function () {
 
   const link = document.createElement("a");
   link.href = resultImage.src;
-  link.download = "magic_canvas.png";
+  link.download = "magic_canvas_ai.png";
   link.click();
 
 });
